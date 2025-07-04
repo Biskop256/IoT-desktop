@@ -6,11 +6,12 @@
 
 This project is a smart automation system that controls a lamp and a fan based on motion detection (PIR sensor), user-defined auto/manual modes, temperature (DHT11 sensor), and the position of the sun. The microcontroller used is Raspberry Pi Pico W. The device connects to WiFi and communicates over MQTT with Home Assistant, running on a Raspberry Pi 4, to send data and user inputs. To avoid manually adding WiFi and MQTT credentials in the code, a reset button has been incorporated. When pressed, it starts an access point where you can enter the new credentials via a web page, which are then saved to a .txt file.
 
+[will add photo: web page of configuration and the front panel.]
 ---
 
 ## Objective
 
-To create a self-contained and WiFi-configurable automation device that:
+I'm a person who's sensetive to the heat in the summers. On top of that I spend a lot of time at my desk and can often get engrossed in what I'm doing and then forget to turn the light on when it gets dark or to turn the fan off when I'm cooled off. To solve that I wanted to create a device that could automate these processes for me. The main objectives have been to create a self-contained and WiFi-configurable automation device that:
 
 - Turns on lights and based on motion and time of day and a fan based on temperature and motion
 - Allows switching between automatic and manual modes
@@ -19,7 +20,7 @@ To create a self-contained and WiFi-configurable automation device that:
 
 ---
 
-## Material
+## Materials
 Items marked with (*) are found in the [LNU starter kit](https://www.electrokit.com/lnu-starter) for a total cheaper price than buying them separately.
 | Component            | Use                                               | Notes                                               | Cost (SEK)|
 |----------------------|----------------------------------------------------|----------------------------------------------------|----------|
@@ -27,9 +28,9 @@ Items marked with (*) are found in the [LNU starter kit](https://www.electrokit.
 | [Raspberry Pi 4](https://www.electrokit.com/raspberry-pi-4-model-b/4gb) | Host for Home Assistant | SD card, ethernet and USB C cable required |729 |
 | [Desktop fan](https://www.clasohlson.com/se/USB-fl%C3%A4kt-%C3%98-14-cm/p/36-7879?utm_source=google&utm_medium=cpc&utm_campaign=p-se-pmax-clas-ohlson-feed&utm_id=21897558452&gad_source=1&gad_campaignid=21901444282&gclid=Cj0KCQjw953DBhCyARIsANhIZoZweBzYua1UH_ivY2qNI5sKeyH0RI0M__Bl6UYj-kND_Kk1e2YJAbMaAqCREALw_wcB) | The controlled fan | Basic USB fan |100|
 | [PIR Sensor](https://www.electrokit.com/pir-rorelsedetektor-hc-sr501)| Detects motion | 3.3V GPIO, has settings for time delay and sensitivity |55 |
-| DHT11*|Temperature and humidity sensor||49|
+| DHT11*|Temperature and humidity sensor|||
 | [5V Relay Module](https://www.kjell.com/se/produkter/el-verktyg/elektronik/utvecklingskit/arduino/moduler/luxorparts-relamodul-for-arduino-1x-p87032)|Controls the fan| Cheaper options exist|100|
-| Resistors*|For LEDs and pull-up for DHT11 sensor| Four 1kΩ, one 10kΩ|70|
+| Resistors*|For LEDs and pull-up for DHT11 sensor| Four 1kΩ, one 10kΩ||
 | LEDs*| Indicators for buttons and wifi-reset mode| Two green, one blue (only yellow in starter kit), one red||
 | [Tactile Switches](https://www.electrokit.com/knappar-pcb-sortiment-12st?gad_source=1&gad_campaignid=17338847491&gclid=Cj0KCQjw953DBhCyARIsANhIZoafeAWtfX31QQbni1Q4TaL7jI7SYvFG01E0TW891F5BpbIP6BgtArAaAozBEALw_wcB) | Buttons for reset, manual and automatic contorl | Four, one for each LED|99|
 | Breadboard*|To connect all the components|||
@@ -40,27 +41,25 @@ Items marked with (*) are found in the [LNU starter kit](https://www.electrokit.
 ---
 
 ## Computer Setup
+The microcontroller used in the project is Raspberry Pi Pico W and MicroPython is the language. The following chapter explains how you flash the firmware to your Pico W, the IDE which was used to develop the code and how you can install the relevant files onto your Pico W.   
 
-- **IDE**: Thonny with MicroPython support
-- **Firmware**: Flash latest (1.25.0) MicroPython `.uf2` to Pico W
-- **Steps**:
-  1. Hold BOOTSEL while plugging in → shows `RPI-RP2`. Make sure the cable supports data transfer.
-  2. Flash firmware
-  3. Upload: `boot.py`, `config_setup.py`, `main.py`, `IoT.py` from this repository.
-  4. When starting up, hold down the red button and initiate the configuration setup.
+### Firmware
+[This tutorial](https://projects.raspberrypi.org/en/projects/getting-started-with-the-pico/3) explains how to install the firmware in a very straight forward way. The TLDR is Hold BOOTSEL while plugging the Pico W in → shows `RPI-RP2`, download the  latest MicroPython `.uf2` and drag into `RPI-RP2`, if it restarts it was successful.
 
+### IDE
+All of the code was developed and tested in Thonny, because it was the environment that caused the least troubles for me. When you have the Pico W plugged in, simply go to Tools > Options > Interpreter and choose "MicroPython (RP2040)". Click "Ok" and Thonny will try to automatically find the port after which you're connected to the Pico W. If you download the .py files in this repository and upload them to the Pico W from Thonny, the software is all ready. 
 ---
 
-## Circuit Setup
+## Circuit setup
 
-
-[photo: circuit in kiCAD]
+[will add photo: circuit in kiCAD]
 
 ---
 
 ## Platform & Architecture
 
-- **Local setup** with Home Assistant and Mosquitto MQTT broker
+### Local setup 
+with Home Assistant and Mosquitto MQTT broker
 - **Device sends**:
   - Motion status
   - Auto/manual mode
