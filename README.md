@@ -48,6 +48,7 @@ The microcontroller used in the project is Raspberry Pi Pico W and MicroPython i
 
 ### IDE
 All of the code was developed and tested in Thonny, because it was the environment that caused the least troubles for me. When you have the Pico W plugged in, simply go to Tools > Options > Interpreter and choose "MicroPython (RP2040)". Click "Ok" and Thonny will try to automatically find the port after which you're connected to the Pico W. If you download the .py files in this repository and upload them to the Pico W from Thonny, the software is all ready. 
+
 ---
 
 ## Circuit setup
