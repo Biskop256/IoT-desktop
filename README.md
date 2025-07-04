@@ -1,12 +1,10 @@
-# Automatic Fan and Light Control with Raspberry Pi Pico W
+# Automatic desktop Fan and Lighting
 
 ## Overview
-
-This project is a smart automation system using a Raspberry Pi Pico W. It controls a lamp and a fan based on motion detection (PIR sensor), user-defined auto/manual modes, temperature (DHT11 sensor) and the position of the sun. The device connects to WiFi using a simple captive portal for setup and communicates over MQTT with Home Assistant set up on a Raspberry pi 4.
-
-- **Title**: Smart Fan & Light Controller with PIR, DHT11, MQTT, and Home Assistant
-- **Short Overview**: Motion and temperature based light and fan control using a microcontroller with web-based WiFi provisioning and MQTT automation.
+- **Author**: Jacob Flisberg jf223wh
 - **Estimated Time**: ~6–12 hours including circuit setup, Home Assistant setup, and debugging
+
+This project is a smart automation system that controls a lamp and a fan based on motion detection (PIR sensor), user-defined auto/manual modes, temperature (DHT11 sensor), and the position of the sun. The microcontroller used is Raspberry Pi Pico W. The device connects to WiFi and communicates over MQTT with Home Assistant, running on a Raspberry Pi 4, to send data and user inputs. To avoid manually adding WiFi and MQTT credentials in the code, a reset button has been incorporated. When pressed, it starts an access point where you can enter the new credentials via a web page, which are then saved to a .txt file.
 
 ---
 
@@ -22,21 +20,21 @@ To create a self-contained and WiFi-configurable automation device that:
 ---
 
 ## Material
-
+Items marked with (*) are found in the [LNU starter kit](https://www.electrokit.com/lnu-starter) for a total cheaper price than buying them separately.
 | Component            | Use                                               | Notes                                               | Cost (SEK)|
 |----------------------|----------------------------------------------------|----------------------------------------------------|----------|
-| Raspberry Pi Pico WH | Main microcontroller                               | WiFi-enabled                                       |99        |
-| Raspberry Pi 4 ||||
-| Desktop fan ||||
-| PIR Sensor (HC-SR501)| Detects motion                                     | 3.3V GPIO                                          |55        |
-| DHT11 ||||
-| 5V Relay Module      | Controls the fan                                   | Cheaper options exist                              |99        |
-| Resistors            | For LEDs and pull-up for DHT11 sensor              | Four 1kΩ, one 10kΩ                                 |          |
-| LEDs                 | Indicators for buttons and wifi-reset mode         |                                                    |          |
-| Switches             | Tactile switches as buttons                        |                                                    |          |
-| Breadboard||||
-| Jumper wires||||
-| Capacitor ||||
+| Raspberry Pi Pico WH*| Main microcontroller |||
+| [Raspberry Pi 4](https://www.electrokit.com/raspberry-pi-4-model-b/4gb) | Host for Home Assistant | SD card, ethernet and USB C cable required |729 |
+| [Desktop fan](https://www.clasohlson.com/se/USB-fl%C3%A4kt-%C3%98-14-cm/p/36-7879?utm_source=google&utm_medium=cpc&utm_campaign=p-se-pmax-clas-ohlson-feed&utm_id=21897558452&gad_source=1&gad_campaignid=21901444282&gclid=Cj0KCQjw953DBhCyARIsANhIZoZweBzYua1UH_ivY2qNI5sKeyH0RI0M__Bl6UYj-kND_Kk1e2YJAbMaAqCREALw_wcB) | The controlled fan | Basic USB fan |100|
+| [PIR Sensor](https://www.electrokit.com/pir-rorelsedetektor-hc-sr501)| Detects motion | 3.3V GPIO, has settings for time delay and sensitivity |55 |
+| DHT11*|Temperature and humidity sensor||49|
+| [5V Relay Module](https://www.kjell.com/se/produkter/el-verktyg/elektronik/utvecklingskit/arduino/moduler/luxorparts-relamodul-for-arduino-1x-p87032)|Controls the fan| Cheaper options exist|100|
+| Resistors*|For LEDs and pull-up for DHT11 sensor| Four 1kΩ, one 10kΩ|70|
+| LEDs*| Indicators for buttons and wifi-reset mode| Two green, one blue (only yellow in starter kit), one red||
+| [Tactile Switches](https://www.electrokit.com/knappar-pcb-sortiment-12st?gad_source=1&gad_campaignid=17338847491&gclid=Cj0KCQjw953DBhCyARIsANhIZoafeAWtfX31QQbni1Q4TaL7jI7SYvFG01E0TW891F5BpbIP6BgtArAaAozBEALw_wcB) | Buttons for reset, manual and automatic contorl | Four, one for each LED|99|
+| Breadboard*|To connect all the components|||
+| Jumper wires*||||
+| [Capacitor](https://www.electrokit.com/x2-kondensator-100nf-275vac-10mm)|Stabiliser for the DHT11 input| One 100nF|12|
 
 
 ---
@@ -48,7 +46,7 @@ To create a self-contained and WiFi-configurable automation device that:
 - **Steps**:
   1. Hold BOOTSEL while plugging in → shows `RPI-RP2`. Make sure the cable supports data transfer.
   2. Flash firmware
-  3. Upload: `boot.py`, `wifi_setup.py`, `main.py`, `iot.py` from this repository.
+  3. Upload: `boot.py`, `config_setup.py`, `main.py`, `IoT.py` from this repository.
   4. When starting up, hold down the red button and initiate the configuration setup.
 
 ---
