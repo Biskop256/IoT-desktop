@@ -41,7 +41,7 @@ The setup will look really messy unless you have something to build it in. I use
 ---
 
 ## Computer Setup
-The microcontroller used in the project is Raspberry Pi Pico W and MicroPython is the language. To develop and test the code I used Thonny, as this was the environment that caused the least troubles for me. The following chapter explains how you flash the firmware to your Pico W, how to set up Thonny and how you can install the relevant files onto your Pico W.   
+The microcontroller used in the project is Raspberry Pi Pico W and MicroPython is the language. To develop and test the code I used Thonny, as this was the environment that caused the least troubles for me. The following chapter explains how you flash the firmware to your Pico W, how to set up Thonny and how you can install the relevant files onto your Pico W. I will also explain briefly how to set up Home Assistant and the MQTT addon.    
 
 ### Firmware
 [This tutorial](https://projects.raspberrypi.org/en/projects/getting-started-with-the-pico/3) explains how to install the firmware in a very straight forward way. The TL;DR is:
@@ -55,12 +55,33 @@ My first idea was to use VS code as this is the environment that I'm used to. Bu
 - Go to Tools > Options > Interpreter and choose "MicroPython (RP2040)". Click "Ok" and Thonny will try to automatically find the port after which you're connected to the Pico W.
 
 ### Uploading the code
-Download the .py files in this repository. 
+Download the .py files in this repository. If you're connected to the Pico W, you'll see the files inside  it in the panel on the left in Thonny. Do the following:
+- Open the code files and choose Files > Save As
+- Pick the Pico W in order to upload it 
+- The file simple.py is not written by me, but it's a library for MicroPython which didn't work for me with this interpreter. If the same is true for you, you'll need to create a directory "umqtt" in the Pico W and upload simple.py to it.
+- If you want to test the code or write something yourself, wait with uploading boot.py. It's a file which runs automatically when the Pico W starts, meaning you won't be able to connect the Pico W to Thonny and see the files inside after it's been uploaded.
+
+If you want to test code you can click the "stop/restart backend" button. When the Pico W is connected, just go to the file you want to test and click "run current script".  
+
+### Home Assistant
+
+To upload the Home Assistant OS to your Raspberry Pi 4, follow [this simple tutorial](https://www.youtube.com/watch?v=OurlX5w7W8c). To set up the MQTT broker:
+- Go into Settings > Add-ons > Add-on store
+- Search for "Mosquitto broker" and download that add-on
+- Create a new user in Home Assistant by going to Setting > People > Add person. Call it something like "IoT_user".
+- Remember the username and password for this user. These credentials are needed later.
+- Go to Settings > Devices & services > Integrations
+- Go into the MQTT add-on and click configure
+- Under "Topic to subscribe to" write "home/rpico/#"
+
+This is all the setup needed to communicate with Home Assistant, but you will also need to create some automations for the light. I go more into this under "The Code".
 
 ---
 
-## Circuit setup
+## Putting everything together
+This section shows how the circuit should be set up and also some electrical calculations to motivate the choice of resistors.
 
+### Circuit setup
 ![photo: circuit](IoT-desktop_circuit.png)
 
 The setup in the photo does not include the USB A to micro B cable which is connected to the Pico W. It also doesn't show that the outer insulation of the wire from the fan was cut only three cm at the end. I tried to avoid making it messy looking without changing how any of the connections actually were on the breadboard. 
@@ -71,6 +92,24 @@ The wires a colored as following:
 - White: Signal coming out of the Pico W
 
 Note that the power wire to the DHT11 is 3.3V, whereas the power wire to the relay, the fan and the PIR-sensor are connected to the VBUS, 5V. The tactile switches in the center of the breadboard only give a signal when pressed down, the switch mechanic happens in the code. The resistors from the Pico W pins to the LED anodes are all 1kΩ. The resistor from the signal of the DHT11 to ground is 10kΩ and stabilizes the received signal from the sensor. The DHT11 is in reality on a circuit board with three pins, but just look at the manual if you're unsure of which pin is which. 
+
+### Electrical calculations
+
+The GPIO pins deliver a voltage of 3.3V. The forward voltages of the LEDs I used are:
+
+|LED color|Forward voltage (V)|
+|---------|-------------------|
+|Red      |2.0                |
+|Green    |2.2                |
+|Blue     |3.0                |
+
+With Ohms law and the resistance 1000Ω, this corresponds to the following currents:
+
+$$ I_{R}=\frac{3.3-2.0}{1000}=1.3 mA$$
+$$ I_{G}=\frac{3.3-2.2}{1000}=1.1 mA$$
+$$ I_{B}=\frac{3.3-3.0}{1000}=0.3 mA$$
+
+These currents are definitely safe for the LED. If you find that the LEDs (particularly the blue one) are too dim, use a resistance of 220Ω-330Ω.
 
 ---
 
