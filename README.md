@@ -184,46 +184,26 @@ So far these are just booleans and don't mean anything, but this can be changed 
 
 ---
 
-## Connectivity
+## Transmitting the data
 
-The device uses WiFi for its wireless communication and transmits data to Home Assistant over the MQTT protocol. Data is sent periodically every three seconds to ensure responsive updates while keeping network traffic minimal. WiFi was chosen because it is widely available in indoor environments, offers sufficient data throughput for this application and its short range is sufficient for the application. For the transport layer, MQTT was selected due to how well it's integrated with Home Assistant, which makes the setup easy, at least on the receiving end.
+The device uses WiFi for its wireless communication and transmits data to Home Assistant over the MQTT protocol. Data is sent periodically every three seconds to ensure responsive updates while keeping network traffic minimal. WiFi was chosen because it is widely available in indoor environments, offers sufficient data throughput for this application and its short range is sufficient for the application. For the transport layer, MQTT was selected due to how well it's integrated with Home Assistant, which makes the setup easy, at least on the receiving end. Since the device is powered from a USB connection, the higher power consumption of WiFi compared to low-energy alternatives like BLE is not a limiting factor. From a security perspective, the use of WiFi with WPA2 encryption ensures that communication over the wireless link is protected.
 
 ---
 
 ## Presenting the data
 
-
-
-
-
-### Notes:
-
-- All conditions under `AND` must be true; "OR" blocks need careful nesting.
-- Debug automations using "Run trace" in the HA automation editor.
-
-[photo: Home Assistant dashboard showing switches and motion status]
+The Home Assistant overview where the Temperature and Humidity data are presented. For data from further back, you can go into "History" and pick the sensors you defined for temperature and humidity. I didn't have to chose an external database as Home Assistant has one internally. Keeping the data self-contained like this is safe and it makes it easy to look back on historical data. You can also decide yourself how far back the data should be saved.
+![Home Assistant data presentation](HA_dashboard.png)
 
 ---
 
-## Final Result
+## Finalizing the design
 
-A fully functional and WiFi-configurable automation controller for fan and light, integrated with Home Assistant and MQTT.
-
-### Features:
-- Resettable via button
-- Auto/manual toggle
-- Live motion tracking
-- Extendable (e.g., humidifier/dehumidifier)
+I'm happy to have successfully built a fully functional and WiFi-configurable automation controller for fan and light, integrated with Home Assistant and MQTT.
 
 ![Final design](Final.jpg)
 
----
-
-## Next Steps
-
-- Power optimization mode
-- More robust hardware setup
-- 
+There's plenty of opportunities to further develop this project. For one, I could use the humidity data that I'm not currently using if I got a humidifier/dehumidifier. One main part of the project was to save on electricity, so you could create a "power saving" option that for example increases the cutoff temperature for the fan if it's been on for over a certain amount of hours the last day. The box I used to contain the device could definitely use some work. It could be made more compact and robust if I get access to a 3D-printer.
 
 ---
 
