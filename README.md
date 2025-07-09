@@ -41,13 +41,21 @@ The setup will look really messy unless you have something to build it in. I use
 ---
 
 ## Computer Setup
-The microcontroller used in the project is Raspberry Pi Pico W and MicroPython is the language. The following chapter explains how you flash the firmware to your Pico W, the IDE which was used to develop the code and how you can install the relevant files onto your Pico W.   
+The microcontroller used in the project is Raspberry Pi Pico W and MicroPython is the language. To develop and test the code I used Thonny, as this was the environment that caused the least troubles for me. The following chapter explains how you flash the firmware to your Pico W, how to set up Thonny and how you can install the relevant files onto your Pico W.   
 
 ### Firmware
-[This tutorial](https://projects.raspberrypi.org/en/projects/getting-started-with-the-pico/3) explains how to install the firmware in a very straight forward way. The TLDR is Hold BOOTSEL while plugging the Pico W in → shows `RPI-RP2`, download the  latest MicroPython `.uf2` and drag into `RPI-RP2`, if it restarts it was successful.
+[This tutorial](https://projects.raspberrypi.org/en/projects/getting-started-with-the-pico/3) explains how to install the firmware in a very straight forward way. The TL;DR is:
+- Hold BOOTSEL while plugging the Pico W in → shows `RPI-RP2`
+- Download the  latest MicroPython `.uf2`
+- Drag into `RPI-RP2`, if it restarts it was successful.
 
 ### IDE
-All of the code was developed and tested in Thonny, because it was the environment that caused the least troubles for me. When you have the Pico W plugged in, simply go to Tools > Options > Interpreter and choose "MicroPython (RP2040)". Click "Ok" and Thonny will try to automatically find the port after which you're connected to the Pico W. If you download the .py files in this repository and upload them to the Pico W from Thonny, the software is all ready. 
+My first idea was to use VS code as this is the environment that I'm used to. But since I had problems with connecting the Pico W, I tried Thonny and it worked right away, no extensions needed. Start by installing Thonny and opening it, then:
+- Plug in the Pico W
+- Go to Tools > Options > Interpreter and choose "MicroPython (RP2040)". Click "Ok" and Thonny will try to automatically find the port after which you're connected to the Pico W.
+
+### Uploading the code
+Download the .py files in this repository. 
 
 ---
 
