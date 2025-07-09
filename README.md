@@ -53,7 +53,7 @@ All of the code was developed and tested in Thonny, because it was the environme
 
 ## Circuit setup
 
-[photo: circuit](IoT-desktop_circuit.png)
+![photo: circuit](IoT-desktop_circuit.png)
 
 The setup in the photo does not include the USB A to micro B cable which is connected to the Pico W. It also doesn't show that the outer insulation of the wire from the fan was cut only three cm at the end. I tried to avoid making it messy looking without changing how any of the connections actually were on the breadboard. 
 The wires a colored as following:
@@ -148,7 +148,7 @@ A fully functional and WiFi-configurable automation controller for fan and light
 - Live motion tracking
 - Extendable (e.g., humidifier/dehumidifier)
 
-[Final design](Final.jpg)
+![Final design](Final.jpg)
 
 ---
 
