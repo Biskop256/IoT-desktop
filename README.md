@@ -162,5 +162,5 @@ A fully functional and WiFi-configurable automation controller for fan and light
 
 ## Demo
 
-[video: light and fan responding to motion + ]
+[Demo video](https://youtu.be/RYoqpWf0TjY)
 
