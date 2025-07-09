@@ -148,7 +148,7 @@ A fully functional and WiFi-configurable automation controller for fan and light
 - Live motion tracking
 - Extendable (e.g., humidifier/dehumidifier)
 
-[Final design](Finalized.jpg)
+[Final design](Final.jpg)
 
 ---
 
