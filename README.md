@@ -36,6 +36,7 @@ Items marked with (*) are found in the [LNU starter kit](https://www.electrokit.
 | Jumper wires*||||
 | [Capacitor](https://www.electrokit.com/x2-kondensator-100nf-275vac-10mm)|Stabiliser for the DHT11 input| One 100nF|12|
 
+The setup will look really messy unless you have something to build it in. I used a cardboard box with electrical tape, but if you have access to a 3D-printer, that would be ideal.
 
 ---
 
