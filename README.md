@@ -10,7 +10,7 @@ This project is a smart automation system that controls a lamp and a fan based o
 
 ## Objective
 
-I'm a person who's sensetive to the heat in the summers. On top of that I spend a lot of time at my desk and can often get engrossed in what I'm doing and then forget to turn the light on when it gets dark or to turn the fan off when I'm cooled off. To solve that I wanted to create a device that could automate these processes for me. The main objectives have been to create a self-contained and WiFi-configurable automation device that:
+I'm a person who's sensetive to the heat in the summers. On top of that I spend a lot of time at my desk and can often get engrossed in what I'm doing and then forget to turn the light on when it gets dark or to turn the fan off when I'm cooled off. To solve these issues and save some money on electricity I wanted to create a device that could automate these processes for me. The main objectives have been to create a self-contained and WiFi-configurable automation device that:
 
 - Turns on lights and based on motion and time of day and a fan based on temperature and motion
 - Allows switching between automatic and manual modes
