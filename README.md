@@ -208,6 +208,6 @@ There's plenty of opportunities to further develop this project. For one, I coul
 ---
 
 ## Demo
-
+This is a little demo video that was used in the presentation of the project.
 [Demo video](https://youtu.be/RYoqpWf0TjY)
 
