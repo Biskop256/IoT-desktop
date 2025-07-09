@@ -27,6 +27,7 @@ Items marked with (*) are found in the [LNU starter kit](https://www.electrokit.
 | [Raspberry Pi 4](https://www.electrokit.com/raspberry-pi-4-model-b/4gb) | Host for Home Assistant | SD card, ethernet and USB C cable required |729 |
 | [Desktop fan](https://www.clasohlson.com/se/USB-fl%C3%A4kt-%C3%98-14-cm/p/36-7879?utm_source=google&utm_medium=cpc&utm_campaign=p-se-pmax-clas-ohlson-feed&utm_id=21897558452&gad_source=1&gad_campaignid=21901444282&gclid=Cj0KCQjw953DBhCyARIsANhIZoZweBzYua1UH_ivY2qNI5sKeyH0RI0M__Bl6UYj-kND_Kk1e2YJAbMaAqCREALw_wcB) | The controlled fan | Basic USB fan |100|
 | [PIR Sensor](https://www.electrokit.com/pir-rorelsedetektor-hc-sr501)| Detects motion | 3.3V GPIO, has settings for time delay and sensitivity |55 |
+| [Smart plug](https://www.kjell.com/se/produkter/smarta-hem/smarta-hem-losningar/cleverio-smarta-hem/cleverio-smart-fjarrstrombrytare-ip200-med-energimatning-3680-w-p52210?utm_source=google&utm_medium=cpc&utm_campaign=SE%20%7C%20UP%20%2D%20PM%20%7C%20Standard%20Shopping&gad_source=1&gad_campaignid=21060731674&gclid=CjwKCAjwprjDBhBTEiwA1m1d0quBJFERe-orUD-pM_r-tYzPJ_6gP0yBwnWsbymvzQAb0sjrLGhQthoC2ZsQAvD_BwE)|Relay for the light|Set up to wifi with "Tuya" app|139|
 | DHT11*|Temperature and humidity sensor|||
 | [5V Relay Module](https://www.kjell.com/se/produkter/el-verktyg/elektronik/utvecklingskit/arduino/moduler/luxorparts-relamodul-for-arduino-1x-p87032)|Controls the fan| Cheaper options exist|100|
 | Resistors*|For LEDs and pull-up for DHT11 sensor| Four 1kΩ, one 10kΩ||
@@ -74,7 +75,14 @@ To upload the Home Assistant OS to your Raspberry Pi 4, follow [this simple tuto
 - Go into the MQTT add-on and click configure
 - Under "Topic to subscribe to" write "home/rpico/#"
 
-This is all the setup needed to communicate with Home Assistant, but you will also need to create some automations for the light. I go more into this under "The Code".
+This is all the setup needed to communicate with Home Assistant, but you will also need to create some automations for the light. I go more into this under "The Code". One very useful add-on to also have is "Studio Code Server". With it, you can see and edit the configuration files inside Home Assistant.
+
+To use the smart plug to Home Assistant you first have to connect it to your wifi. Do this by:
+- Downloading the app "Tuya"
+- Put the plug in a socket and press the button until it starts blinking
+- Connect to it in the app
+- In Home Assistant go to Settings > Devices & Services > Integrations > Add integration
+- Search for Tuya and you will get a QR code that you can read in the Tuya app to connect the smart plug
 
 ---
 
@@ -113,20 +121,28 @@ These currents are definitely safe for the LED. If you find that the LEDs (parti
 
 ---
 
-## Platform & Architecture
+## Platform
+This section goes into Home Assistant, why I chose it and how you can use it to present your data.
 
-### Local setup 
-with Home Assistant and Mosquitto MQTT broker
-- **Device sends**:
-  - Motion status
-  - Auto/manual mode
-  - Light/fan on/off status
-  - Data of temperature and humidity
-- **Device receives**:
-  - Commands to switch the light on/off
+### Home assistant 
+Home assistant is an open-source software that is very user friendly and of course free. Since I already had a Raspberry pi pico 4 with Home Assistant installed, using it for my project was a no-brainer. And since I was already sending the data to Home Assistant to do the automations for the light, using it to also present my data was the easiest choice. I presented my data by adding the following sensors:
+``` 
+mqtt:
+  sensor:
+    - name: "RPiCo Temperature"
+      state_topic: "home/rpico/temperature"
+      unit_of_measurement: "°C"
+      device_class: temperature
+
+    - name: "RPiCo Humidity"
+      state_topic: "home/rpico/humidity"
+      unit_of_measurement: "%"
+      device_class: humidity
+```
+These are added into "configuration.yaml", which you can reach with the Studio Code Server add-on. If you go to Overview in Home Assistant and click the pencil in the top right, you can edit the main dashboard. To get the temperature and humidity you simply click "Add card" and search "History graph". Here you can pick which sensors to present data from and how far back in time.
 
 ### MQTT Topics
-
+These are the topics you'll need to subscribe to for the different automations. How to create these automations is explained in the next section.  
 - `home/rpico/temperature`
 - `home/rpico/humidity`
 - `home/rpico/pir`
@@ -143,39 +159,42 @@ with Home Assistant and Mosquitto MQTT broker
   On boot: if reset button is pressed, starts `wifi_setup.py`. Otherwise runs `main.py`.
 
 - **`wifi_setup.py`**  
-  Starts an access point "CridentialsSetup", password "desk1234", opens a web page on http://192.168.4.1/ where SSID, password, MQTT broker, etc. can be entered. Credentials are saved to `wifi_config.txt`.
+  Starts an access point "CridentialsSetup", password "desk1234", opens a web page on http://192.168.4.1/ where SSID, password, MQTT broker, etc. can be entered. Credentials are saved to `config.txt`.
 
 - **`main.py`**  
-  Connects to wifi using info saved in `wifi_config.txt`  and initiates `wifi_config.txt`. 
+  Connects to wifi and MQTT using info saved in `config.txt`  and initiates `IoT.py`. 
 
 - **`IoT.py`**  
-  Connects to MQTT, Reads motion sensor, checks if in auto mode, and controls the relay accordingly. Publishes to MQTT topics subscribed to by Home Assistant broker for remote control of the light.
+  Here all of the pins of the LEDs, buttons, sensors and relay are defined. Inside of a while-loop it check if the buttons are pressed and changes a boolean variable if so. Then it updates the LEDs and the relay for the fan accordingly. It also updates the sensors and sends this data to Home Assistant every three seconds.
 
-[photo: screenshot of WiFi setup page served by the device]
+### Automations
+
+In order to automate the light, you have to create automations in home assistant. But first you will need to Settings > Devices & Services > Helpers and create the following helpers:
+- A boolean `movement_boolean` for movement
+- A boolean `manual_boolean` for the lamp in manual mode
+- A boolean `auto_boolean` for the lamp in auto mode
+So far these are just booleans and don't mean anything, but this can be changed with automations. Create the following automations:
+- Two automations that turns `movement_boolean` on or off if it receive an `ON` or `OFF` message from the port `home/rpico/pir`
+- Two automations that turns `manual_boolean` on or off, and also turns your smart plug on or off if it receive an `ON` or `OFF` message from the port `home/rpico/buttonLight`
+- Two automations that turns `auto_boolean` on or off if it receive an `ON` or `OFF` message from the port `home/rpico/buttonAut`
+- If `auto_boolean` is on **and** it receive an `ON` message from the port `home/rpico/buttonLight` → turn off `manual_boolean`
+- If `manual_boolean` is on **and** it receive an `ON` message from the port `home/rpico/buttonAut` → turn off `auto_boolean`
+- If `auto_boolean` is `on` **and** motion is detected **and** sun is down → turn on smart plug
+- If `auto_mode` is `on` **and** no motion **or** sun is up → turn off smart plug
 
 ---
 
 ## Connectivity
 
-- **WiFi**: Connects using credentials saved via captive portal
-- **MQTT**: Publishes sensor data and receives control signals
-- **Protocols**: TCP/IP + MQTT over WiFi
+The device uses WiFi for its wireless communication and transmits data to Home Assistant over the MQTT protocol. Data is sent periodically every three seconds to ensure responsive updates while keeping network traffic minimal. WiFi was chosen because it is widely available in indoor environments, offers sufficient data throughput for this application and its short range is sufficient for the application. For the transport layer, MQTT was selected due to how well it's integrated with Home Assistant, which makes the setup easy, at least on the receiving end.
 
 ---
 
-## Integration with Home Assistant
+## Presenting the data
 
-- **MQTT integration** enabled in HA
-- **Entities created**:
-  - `input_boolean.auto_mode`
-  - `input_boolean.motion_detected`
-  - `switch.light`
 
-### Automations (in HA):
 
-- If `auto_mode` is `on` **and** motion is detected **and** sun is down → turn on light
-- If `auto_mode` is `on` **and** no motion **or** sun is up → turn off light
-- If 
+
 
 ### Notes:
 
