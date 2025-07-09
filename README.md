@@ -53,7 +53,15 @@ All of the code was developed and tested in Thonny, because it was the environme
 
 ## Circuit setup
 
-[will add photo: circuit in kiCAD]
+[photo: circuit](Screenshot_2025-07-09_132743.png)
+
+The setup in the photo does not include the USB A to micro B cable which is connected to the Pico W. It also doesn't show that the outer insulation of the wire from the fan was cut only three cm at the end. I tried to avoid making it messy looking without changing how any of the connections actually were on the breadboard. 
+The wires a colored as following:
+- Black: ground
+- Red: Power supply
+- Yellow: Signal going into the Pico W
+- White: Signal coming out of the Pico W
+Note that the power wire to the DHT11 is 3.3V, whereas the power wire to the relay, the fan and the PIR-sensor are connected to the VBUS, 5V. The tactile switches in the center of the breadboard only give a signal when pressed down, the switch mechanic happens in the code. The resistors from the Pico W pins to the LED anodes are all 1kΩ. The resistor from the signal of the DHT11 to ground is 10kΩ and stabilizes the received signal from the sensor.
 
 ---
 
