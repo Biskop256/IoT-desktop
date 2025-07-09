@@ -61,7 +61,8 @@ The wires a colored as following:
 - Red: Power supply
 - Yellow: Signal going into the Pico W
 - White: Signal coming out of the Pico W
-Note that the power wire to the DHT11 is 3.3V, whereas the power wire to the relay, the fan and the PIR-sensor are connected to the VBUS, 5V. The tactile switches in the center of the breadboard only give a signal when pressed down, the switch mechanic happens in the code. The resistors from the Pico W pins to the LED anodes are all 1kΩ. The resistor from the signal of the DHT11 to ground is 10kΩ and stabilizes the received signal from the sensor.
+
+Note that the power wire to the DHT11 is 3.3V, whereas the power wire to the relay, the fan and the PIR-sensor are connected to the VBUS, 5V. The tactile switches in the center of the breadboard only give a signal when pressed down, the switch mechanic happens in the code. The resistors from the Pico W pins to the LED anodes are all 1kΩ. The resistor from the signal of the DHT11 to ground is 10kΩ and stabilizes the received signal from the sensor. The DHT11 is in reality on a circuit board with three pins, but just look at the manual if you're unsure of which pin is which. 
 
 ---
 
