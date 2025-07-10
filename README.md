@@ -56,8 +56,8 @@ My first idea was to use VS code as this is the environment that I'm used to. Bu
 - Go to Tools > Options > Interpreter and choose "MicroPython (RP2040)". Click "Ok" and Thonny will try to automatically find the port after which you're connected to the Pico W.
 
 ### Uploading the code
-Download the .py files in this repository. If you're connected to the Pico W, you'll see the files inside  it in the panel on the left in Thonny. Do the following:
-- Open the code files and choose Files > Save As
+Download the .py files in this repository. If you're connected to the Pico W in yhonny, you'll see it in the file explorer panel on the left in Thonny. Do the following:
+- Open the code files in Thonny and choose Files > Save As
 - Pick the Pico W in order to upload it 
 - The file simple.py is not written by me, but it's a library for MicroPython which didn't work for me with this interpreter. If the same is true for you, you'll need to create a directory "umqtt" in the Pico W and upload simple.py to it.
 - If you want to test the code or write something yourself, wait with uploading boot.py. It's a file which runs automatically when the Pico W starts, meaning you won't be able to connect the Pico W to Thonny and see the files inside after it's been uploaded.
@@ -75,10 +75,10 @@ To upload the Home Assistant OS to your Raspberry Pi 4, follow [this simple tuto
 - Go into the MQTT add-on and click configure
 - Under "Topic to subscribe to" write "home/rpico/#"
 
-This is all the setup needed to communicate with Home Assistant, but you will also need to create some automations for the light. I go more into this under "The Code". One very useful add-on to also have is "Studio Code Server". With it, you can see and edit the configuration files inside Home Assistant.
+This is all the setup needed to communicate with Home Assistant, but you will also need to create some automations for the light. I go more into this under "The Code" chapter. One very useful add-on to also have is "Studio Code Server". With it, you can see and edit the configuration files inside Home Assistant.
 
-To use the smart plug to Home Assistant you first have to connect it to your wifi. Do this by:
-- Downloading the app "Tuya"
+To pair the smart plug to Home Assistant you first have to connect it to your wifi. Do this by:
+- Downloading the app "Tuya" on your phone
 - Put the plug in a socket and press the button until it starts blinking
 - Connect to it in the app
 - In Home Assistant go to Settings > Devices & Services > Integrations > Add integration
