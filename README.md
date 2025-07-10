@@ -125,7 +125,7 @@ These currents are definitely safe for the LED. If you find that the LEDs (parti
 This section goes into Home Assistant, why I chose it and how you can use it to present your data.
 
 ### Home assistant 
-Home assistant is an open-source software that is very user friendly and of course free. Since I already had a Raspberry pi pico 4 with Home Assistant installed, using it for my project was a no-brainer. And since I was already sending the data to Home Assistant to do the automations for the light, using it to also present my data was the easiest choice. I presented my data by adding the following sensors:
+Home assistant is an open-source software that is very user friendly and of course free. Since I already had a Raspberry Pi 4 with Home Assistant installed, using it for my project was a no-brainer. And since I was already sending the data to Home Assistant to do the automations for the light, using it to also present my data was the easiest choice. I presented my data by adding the following sensors:
 ``` 
 mqtt:
   sensor:
