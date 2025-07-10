@@ -169,7 +169,7 @@ These are the topics you'll need to subscribe to for the different automations. 
 
 ### Automations
 
-In order to automate the light, you have to create automations in home assistant. But first you will need to Settings > Devices & Services > Helpers and create the following helpers:
+In order to automate the light, you have to create automations in home assistant. But to create the logic you will need a few boolean variables. Go to Settings > Devices & Services > Helpers and create the following helpers:
 - A boolean `movement_boolean` for movement
 - A boolean `manual_boolean` for the lamp in manual mode
 - A boolean `auto_boolean` for the lamp in auto mode
