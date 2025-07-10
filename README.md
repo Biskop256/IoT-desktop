@@ -165,7 +165,7 @@ These are the topics you'll need to subscribe to for the different automations. 
   Connects to wifi and MQTT using info saved in `config.txt`  and initiates `IoT.py`. 
 
 - **`IoT.py`**  
-  Here all of the pins of the LEDs, buttons, sensors and relay are defined. Inside of a while-loop it check if the buttons are pressed and changes a boolean variable if so. Then it updates the LEDs and the relay for the fan accordingly. It also updates the sensors and sends this data to Home Assistant every three seconds.
+  Here all of the pins of the LEDs, buttons, sensors and relay are defined. Inside of a while-loop it checks if the buttons are pressed and changes a boolean variable if so. Then it updates the LEDs and the relay for the fan accordingly. It also updates the sensors and sends this data to Home Assistant every three seconds.
 
 ### Automations
 
