@@ -173,6 +173,7 @@ In order to automate the light, you have to create automations in home assistant
 - A boolean `movement_boolean` for movement
 - A boolean `manual_boolean` for the lamp in manual mode
 - A boolean `auto_boolean` for the lamp in auto mode
+
 So far these are just booleans and don't mean anything, but this can be changed with automations. Create the following automations:
 - Two automations that turns `movement_boolean` on or off if it receive an `ON` or `OFF` message from the port `home/rpico/pir`
 - Two automations that turns `manual_boolean` on or off, and also turns your smart plug on or off if it receive an `ON` or `OFF` message from the port `home/rpico/buttonLight`
