@@ -156,10 +156,10 @@ These are the topics you'll need to subscribe to for the different automations. 
 ### Files
 
 - **`boot.py`**  
-  On boot: if reset button is pressed, starts `wifi_setup.py`. Otherwise runs `main.py`.
+  On boot: if reset button is pressed, starts `config_setup.py`. Otherwise runs `main.py`.
 
-- **`wifi_setup.py`**  
-  Starts an access point "CridentialsSetup", password "desk1234", opens a web page on http://192.168.4.1/ where SSID, password, MQTT broker, etc. can be entered. Credentials are saved to `config.txt`.
+- **`config_setup.py`**  
+  Starts an access point "CredentialsSetup", password "desk1234", opens a web page on http://192.168.4.1/ where SSID, password, MQTT broker, etc. can be entered. Credentials are saved to `config.txt`.
 
 - **`main.py`**  
   Connects to wifi and MQTT using info saved in `config.txt`  and initiates `IoT.py`. 
