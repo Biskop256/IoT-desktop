@@ -56,7 +56,7 @@ My first idea was to use VS code as this is the environment that I'm used to. Bu
 - Go to Tools > Options > Interpreter and choose "MicroPython (RP2040)". Click "Ok" and Thonny will try to automatically find the port after which you're connected to the Pico W.
 
 ### Uploading the code
-Download the .py files in this repository. If you're connected to the Pico W in yhonny, you'll see it in the file explorer panel on the left in Thonny. Do the following:
+Download the `.py` files in this repository. If you're connected to the Pico W in Thonny, you'll see it in the file explorer panel on the left in Thonny. Do the following:
 - Open the code files in Thonny and choose Files > Save As
 - Pick the Pico W in order to upload it 
 - The file simple.py is not written by me, but it's a library for MicroPython which didn't work for me with this interpreter. If the same is true for you, you'll need to create a directory "umqtt" in the Pico W and upload simple.py to it.
